@@ -45,7 +45,7 @@ class MyComponent extends StreamlitComponentBase<State> {
     // variable, and send its new value back to Streamlit, where it'll
     // be available to the Python program.
     return (
-      <span>
+      <div>
         Hello, {name}! &nbsp;
         <button
           style={style}
@@ -56,7 +56,8 @@ class MyComponent extends StreamlitComponentBase<State> {
         >
           Click Me!
         </button>
-      </span>
+        <div>hello</div>
+      </div>
     )
   }
 
