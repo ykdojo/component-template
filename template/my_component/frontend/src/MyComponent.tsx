@@ -4,6 +4,7 @@ import {
   withStreamlitConnection,
 } from "streamlit-component-lib"
 import React, { ReactNode } from "react"
+const FoamTree = require('@carrotsearch/foamtree').FoamTree
 
 interface State {
   numClicks: number
@@ -46,7 +47,6 @@ class MyComponent extends StreamlitComponentBase<State> {
     // be available to the Python program.
     return (
       <div>
-        Hello, {name}! &nbsp;
         <button
           style={style}
           onClick={this.onClicked}
@@ -54,8 +54,9 @@ class MyComponent extends StreamlitComponentBase<State> {
           onFocus={this._onFocus}
           onBlur={this._onBlur}
         >
-          Click Me!
+          Show graph
         </button>
+        <div id="visualization" style={{width: '800px', height: '600px'}} />
         <div>hello</div>
       </div>
     )
@@ -63,12 +64,17 @@ class MyComponent extends StreamlitComponentBase<State> {
 
   /** Click handler for our "Click Me!" button. */
   private onClicked = (): void => {
-    // Increment state.numClicks, and pass the new value back to
-    // Streamlit via `Streamlit.setComponentValue`.
-    this.setState(
-      prevState => ({ numClicks: prevState.numClicks + 1 }),
-      () => Streamlit.setComponentValue(this.state.numClicks)
-    )
+    var foamtree = new FoamTree({
+      id: "visualization",
+      dataObject: {
+        groups: [
+          { label: "Your", weight: 1.0 },
+          { label: "First", weight: 3.0 },
+          { label: "FoamTree", weight: 2.0 },
+          { label: "Visualization", weight: 4.0 }
+        ]
+      }
+    });
   }
 
   /** Focus handler for our "Click Me!" button. */
